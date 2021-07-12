@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import APIURL from '../../Utilities/Environments';
 import { RegisterDiv } from '../Styles/Index';
 
@@ -36,11 +36,11 @@ const Register = (props: Props) => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
-        setEmail(''),
-          setPassword(''),
-          setFirstName(''),
-          setLastName(''),
-          setRole('');
+        setEmail('');
+        setPassword('');
+        setFirstName('');
+        setLastName('');
+        setRole('');
       })
       .then(() => {
         props.fetchUsers();

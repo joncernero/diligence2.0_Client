@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import PropertyEdit from './PropertyEdit';
 import PropertyCreate from './PropertyCreate';
@@ -36,10 +36,8 @@ type Props = {
   properties: Property[];
   fetchProperties: Function;
   toggleEditOn: Function;
-  toggleEditOff: Function;
   editProperty: Function;
   toggleCreateOn: Function;
-  toggleCreateOff: Function;
   updateActive: boolean;
   createActive: boolean;
 };
@@ -71,14 +69,12 @@ const PropertyTable = (props: Props) => {
           <TableCell>{property.state}</TableCell>
           <TableCell>{property.zipcode}</TableCell>
           <TableCell>{property.numberOfUnits}</TableCell>
-          <TableCell>{property.companyId}</TableCell>
           <TableCell>
             <EditButton
               onClick={() => {
                 setEditingProperty(property);
-                props.editProperty();
+                props.editProperty(property);
                 props.toggleEditOn();
-                props.toggleEditOff();
               }}>
               Edit
             </EditButton>
@@ -104,7 +100,6 @@ const PropertyTable = (props: Props) => {
             token={props.token}
             fetchProperties={props.fetchProperties}
             toggleCreateOn={props.toggleCreateOn}
-            toggleCreateOff={props.toggleCreateOff}
           />
         ) : null}
         <TitleDiv>
@@ -112,7 +107,6 @@ const PropertyTable = (props: Props) => {
           <CreateButton
             onClick={() => {
               props.toggleCreateOn();
-              props.toggleCreateOff();
             }}>
             New Property
           </CreateButton>
@@ -140,7 +134,6 @@ const PropertyTable = (props: Props) => {
           token={props.token}
           editProperty={props.editProperty}
           toggleEditOn={props.toggleEditOn}
-          toggleEditOff={props.toggleEditOff}
           fetchProperties={props.fetchProperties}
         />
       ) : null}

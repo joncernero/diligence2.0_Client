@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Dashboard from './Components/Contents/Dashboard';
 import PropertyIndex from './Components/Contents/Property/PropertyIndex';
+import UnitIndex from './Components/Contents/Units/UnitIndex';
 import {
   BrowserRouter as Router,
   Route,
@@ -48,9 +49,9 @@ const App = () => {
     if (pageToShow === 'property') {
       component = <PropertyIndex token={sessionToken} />;
     }
-    // if (pageToShow === 'units') {
-    //   component = <UnitIndex token={sessionToken} />;
-    // }
+    if (pageToShow === 'units') {
+      component = <UnitIndex token={sessionToken} />;
+    }
     // if (pageToShow === 'features') {
     //   component = <FeatureIndex token={sessionToken} />;
     // }

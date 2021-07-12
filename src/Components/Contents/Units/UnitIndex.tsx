@@ -1,58 +1,63 @@
 import React, { useState, useEffect } from 'react';
 import APIURL from '../../../Utilities/Environments';
-import PropertyTable from './PropertyTable';
+import UnitTable from './UnitTable';
+import { Container } from '../../Styles/Containers';
+import { useParams } from 'react-router-dom';
 
-type Property = {
+type Unit = {
   id: number;
   name: string;
-  streetAddress: string;
-  city: string;
-  state: string;
-  zipcode: string;
-  numberOfUnits: number;
-  companyId: number;
+  unitNumber: string;
+  bldgNumber: string;
+  numberOfBeds: number;
+  numberOfBaths: number;
+  totalSquareFootage: number;
+  propertyId: number;
 };
 
 type Props = {
   token: string | null;
+  propertyId?: number;
 };
 
-const PropertyIndex = (props: Props) => {
-  const [properties, setProperties] = useState([]);
+const UnitIndex = (props: Props) => {
+  const [units, setUnits] = useState([]);
   const [updateActive, setUpdateActive] = useState(false);
   const [createActive, setCreateActive] = useState(false);
-  const [propertyToUpdate, setPropertyToUpdate] = useState({
+  const { propertyId } = useParams<{ propertyId?: string }>();
+  const [unitToUpdate, setUnitToUpdate] = useState({
     id: 0,
     name: '',
-    streetAddress: '',
-    city: '',
-    zipcode: '',
-    numberOfUnits: 0,
-    companyId: 0,
+    unitNumber: '',
+    bldgNumber: '',
+    numberOfBeds: 0,
+    numberOfBaths: 0,
+    totalSquareFootage: 0,
+    propertyId: Number(propertyId),
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchProperties = () => {
-    fetch(`${APIURL}/property/`, {
-      method: 'Get',
+  const fetchUnits = () => {
+    fetch(`${APIURL}/unit/${propertyId}`, {
       headers: new Headers({
         'Content-Type': 'application/json',
         Authorization: `${localStorage.getItem('token')}`,
       }),
     })
       .then((res) => res.json())
-      .then((property) => {
-        setProperties(property);
+      .then((unit) => {
+        setUnits(unit);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
 
-  const editProperty = (property: Property) => {
-    setPropertyToUpdate(property);
-    console.log(property);
+  const editUnit = (unit: Unit) => {
+    setUnitToUpdate(unit);
+    console.log(unit);
   };
+
   const toggleEditOn = () => {
     setUpdateActive(!updateActive);
   };
@@ -62,7 +67,7 @@ const PropertyIndex = (props: Props) => {
   };
 
   useEffect(() => {
-    fetchProperties();
+    fetchUnits();
   }, []);
 
   const showLoading = () => {
@@ -74,20 +79,20 @@ const PropertyIndex = (props: Props) => {
   return (
     <>
       {showLoading()}
-      <>
-        <PropertyTable
-          properties={properties}
-          token={props.token}
-          fetchProperties={fetchProperties}
-          editProperty={editProperty}
+      <Container>
+        <UnitTable
+          units={units}
+          token={props.token || ''}
+          fetchUnits={fetchUnits}
+          editUnit={editUnit}
           toggleEditOn={toggleEditOn}
           toggleCreateOn={toggleCreateOn}
           createActive={createActive}
           updateActive={updateActive}
         />
-      </>
+      </Container>
     </>
   );
 };
 
-export default PropertyIndex;
+export default UnitIndex;

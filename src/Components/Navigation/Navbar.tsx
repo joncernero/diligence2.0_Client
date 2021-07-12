@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,7 @@ import {
   NavbarToggle,
   Span,
 } from '../Styles/Nav';
+import './Navbar.css';
 import { useHistory } from 'react-router-dom';
 
 type Props = {
@@ -18,18 +19,18 @@ type Props = {
   clearToken: () => void;
 };
 
-function Navbar({ clearToken }: Props) {
+const Navbar = (props: Props) => {
   const [sideBar, setSideBar] = useState(false);
   const history = useHistory();
-  const showSidebar = () => setSideBar(!sideBar);
 
+  const showSidebar = () => setSideBar(!sideBar);
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
         <NavbarDiv>
           <Link to='#'>
             <MenuBars>
-              <FaIcons.FaBars onClick={() => setSideBar((p) => !p)} />
+              <FaIcons.FaBars onClick={showSidebar} />
             </MenuBars>
           </Link>
           <Link to='/dashboard'>
@@ -38,7 +39,7 @@ function Navbar({ clearToken }: Props) {
           {localStorage.getItem('token') ? (
             <button
               onClick={() => {
-                clearToken();
+                props.clearToken();
                 history.push('/');
               }}>
               Logout
@@ -50,27 +51,29 @@ function Navbar({ clearToken }: Props) {
           )}
         </NavbarDiv>
         <nav className={sideBar ? 'nav-menu active' : 'nav-menu'}>
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li>
+          <NavMenuItems onClick={showSidebar}>
+            <NavbarToggle>
+              <MenuBars>
+                <Link to='#'>
+                  <AiIcons.AiOutlineClose />
+                </Link>
+              </MenuBars>
+            </NavbarToggle>
             {SideBarData.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>
                     {item.icon}
-                    <span>{item.title}</span>
+                    <Span>{item.title}</Span>
                   </Link>
                 </li>
               );
             })}
-          </ul>
+          </NavMenuItems>
         </nav>
       </IconContext.Provider>
     </>
   );
-}
+};
 
 export default Navbar;

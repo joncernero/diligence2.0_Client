@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
 import { motion } from 'framer-motion';
@@ -17,7 +17,6 @@ type Property = {
 type Props = {
   token: string | null;
   toggleEditOn: Function;
-  toggleEditOff: Function;
   editProperty: Function;
   propertyToUpdate: Property;
   fetchProperties: Function;
@@ -58,7 +57,6 @@ const PropertyEdit = (props: Props) => {
       .then(() => {
         props.fetchProperties();
         props.toggleEditOn();
-        props.toggleEditOff();
         props.editProperty();
       });
   };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
 import { motion } from 'framer-motion';
@@ -7,7 +7,6 @@ type Props = {
   token: string | null;
   fetchProperties: Function;
   toggleCreateOn: Function;
-  toggleCreateOff: Function;
 };
 
 const PropertyCreate = (props: Props) => {
@@ -15,13 +14,13 @@ const PropertyCreate = (props: Props) => {
   const [streetAddress, setStreetAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
-  const [zipcode, setZipcode] = useState('');
+  const [zipcode, setZipcode] = useState(0);
   const [numberOfUnits, setNumberOfUnits] = useState(0);
 
   const fetchPropertyData = (e: React.FormEvent): void => {
     e.preventDefault();
     fetch(`${APIURL}/property/create`, {
-      method: 'Post',
+      method: 'POST',
       body: JSON.stringify({
         name: name,
         streetAddress: streetAddress,
@@ -37,18 +36,17 @@ const PropertyCreate = (props: Props) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {
+      .then((property) => {
         setName('');
         setStreetAddress('');
         setCity('');
         setState('');
-        setZipcode('');
+        setZipcode(0);
         setNumberOfUnits(0);
       })
       .then(() => {
         props.fetchProperties();
-        props.toggleCreateOn();
-        props.toggleCreateOff();
+        props.toggleCreateOn(true);
       });
   };
 
@@ -93,7 +91,7 @@ const PropertyCreate = (props: Props) => {
           <input
             name='zipcode'
             value={zipcode}
-            onChange={(e) => setZipcode(e.target.value)}
+            onChange={(e) => setZipcode(Number(e.target.value))}
           />
         </div>
         <div>
