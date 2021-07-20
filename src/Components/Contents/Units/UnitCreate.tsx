@@ -25,13 +25,15 @@ const UnitCreate = (props: Props) => {
     fetch(`${APIURL}/unit/create`, {
       method: 'POST',
       body: JSON.stringify({
-        name: name,
-        unitNumber: unitNumber,
-        bldgNumber: bldgNumber,
-        numberOfBeds: numberOfBeds,
-        numberOfBaths: numberOfBaths,
-        totalSquareFootage: totalSquareFootage,
-        propertyId: propertyId,
+        propertyId,
+        unit: {
+          name: name,
+          unitNumber: unitNumber,
+          bldgNumber: bldgNumber,
+          numberOfBeds: numberOfBeds,
+          numberOfBaths: numberOfBaths,
+          totalSquareFootage: totalSquareFootage,
+        },
       }),
       headers: new Headers({
         'Content-Type': 'application/json',

@@ -50,7 +50,7 @@ const UnitTable = (props: Props) => {
       method: 'Delete',
       headers: new Headers({
         'Content-Type': 'application/json',
-        Authorizaton: `${localStorage.getItem('token')}`,
+        Authorization: `${localStorage.getItem('token')}`,
       }),
     }).then(() => props.fetchUnits());
   };
@@ -59,7 +59,7 @@ const UnitTable = (props: Props) => {
     return props.units.map((unit: Unit, index) => {
       return (
         <TableRow key={index}>
-          <TableCell onClick={() => history.push(`/units/${unit.id}`)}>
+          <TableCell onClick={() => history.push(`/features/${unit.id}`)}>
             {unit.name}
           </TableCell>
           <TableCell>{unit.unitNumber}</TableCell>

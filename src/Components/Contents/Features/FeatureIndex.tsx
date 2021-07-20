@@ -1,62 +1,57 @@
 import React, { useState, useEffect } from 'react';
 import APIURL from '../../../Utilities/Environments';
-import UnitTable from './UnitTable';
+import FeatureTable from './FeatureTable';
 import { Container } from '../../Styles/Containers';
 import { useParams } from 'react-router-dom';
 
-type Unit = {
+interface Feature {
   id: number;
-  name: string;
-  unitNumber: string;
-  bldgNumber: string;
-  numberOfBeds: number;
-  numberOfBaths: number;
-  totalSquareFootage: number;
-  propertyId: number;
-};
+  feature: string;
+  roomType: string;
+  value: string;
+  notes: string;
+  unitId: number;
+}
 
 type Props = {
   token: string | null;
-  propertyId?: number;
+  unitId?: number;
 };
 
-const UnitIndex = (props: Props) => {
-  const [units, setUnits] = useState([]);
+const FeatureIndex = (props: Props) => {
+  const [features, setFeatures] = useState([]);
   const [updateActive, setUpdateActive] = useState(false);
   const [createActive, setCreateActive] = useState(false);
-  const { propertyId } = useParams<{ propertyId?: string }>();
-  const [unitToUpdate, setUnitToUpdate] = useState({
+  const { unitId } = useParams<{ unitId?: string }>();
+  const [featureToUpdate, setFeatureToUpdate] = useState({
     id: 0,
-    name: '',
-    unitNumber: '',
-    bldgNumber: '',
-    numberOfBeds: 0,
-    numberOfBaths: 0,
-    totalSquareFootage: 0,
-    propertyId: Number(propertyId),
+    feature: '',
+    roomType: '',
+    value: '',
+    notes: '',
+    unitId: Number(unitId),
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchUnits = () => {
-    fetch(`${APIURL}/unit/${propertyId}`, {
-      method: 'Get',
+  const fetchFeatures = () => {
+    fetch(`${APIURL}/feature/${unitId}`, {
       headers: new Headers({
         'Content-Type': 'application/json',
         Authorization: `${localStorage.getItem('token')}`,
       }),
     })
       .then((res) => res.json())
-      .then((unit) => {
-        setUnits(unit);
+      .then((feature) => {
+        setFeatures(feature);
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
 
-  const editUnit = (unit: Unit) => {
-    setUnitToUpdate(unit);
-    console.log(unit);
+  const editFeature = (feature: Feature) => {
+    setFeatureToUpdate(feature);
+    console.log(feature);
   };
 
   const toggleEditOn = () => {
@@ -68,7 +63,7 @@ const UnitIndex = (props: Props) => {
   };
 
   useEffect(() => {
-    fetchUnits();
+    fetchFeatures();
   }, []);
 
   const showLoading = () => {
@@ -81,11 +76,11 @@ const UnitIndex = (props: Props) => {
     <>
       {showLoading()}
       <Container>
-        <UnitTable
-          units={units}
+        <FeatureTable
+          features={features}
           token={props.token || ''}
-          fetchUnits={fetchUnits}
-          editUnit={editUnit}
+          fetchFeatures={fetchFeatures}
+          editFeature={editFeature}
           toggleEditOn={toggleEditOn}
           toggleCreateOn={toggleCreateOn}
           createActive={createActive}
@@ -96,4 +91,4 @@ const UnitIndex = (props: Props) => {
   );
 };
 
-export default UnitIndex;
+export default FeatureIndex;
