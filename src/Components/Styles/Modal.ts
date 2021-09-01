@@ -1,18 +1,15 @@
 import styled from 'styled-components';
 
 export const StyledModal = styled.div`
-  width: 25%;
+  width: 100vw;
   height: 65vh;
-  border-radius: 10px;
-  padding: 35px 25px;
+  padding: 0 0 45px 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: white;
   position: absolute;
   margin: 0 auto;
   z-index: 75;
-  top: 50%;
+  top: 52%;
   left: 50%;
   transform: translate(-50%, -50%);
   box-shadow: 1px 1px 15px black;
@@ -24,7 +21,8 @@ export const StyledModal = styled.div`
 
   form {
     color: #283747;
-    display: block;
+    display: flex;
+    flex-direction: column;
     width: 300px;
     margin: 10px auto;
   }
@@ -55,8 +53,10 @@ export const StyledModal = styled.div`
     font-weight: bold;
     background: #060b26;
     border-radius: 5px;
-    margin: 15px;
+    margin: 15px 0 0 0;
+    padding: 5px;
     box-shadow: 1px 3px 7px gray;
+    align-self: center;
 
     &:hover {
       background: #d4efdf;

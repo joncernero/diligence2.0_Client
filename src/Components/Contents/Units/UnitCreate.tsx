@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 
 type Props = {
@@ -21,19 +21,18 @@ const UnitCreate = (props: Props) => {
   const { propertyId } = useParams<{ propertyId?: string }>();
 
   const fetchUnitData = (e: React.FormEvent): void => {
+    console.log(propertyId);
     e.preventDefault();
-    fetch(`${APIURL}/unit/create`, {
+    fetch(`${APIURL}/unit/create/`, {
       method: 'POST',
       body: JSON.stringify({
-        propertyId,
-        unit: {
-          name: name,
-          unitNumber: unitNumber,
-          bldgNumber: bldgNumber,
-          numberOfBeds: numberOfBeds,
-          numberOfBaths: numberOfBaths,
-          totalSquareFootage: totalSquareFootage,
-        },
+        name: name,
+        unitNumber: unitNumber,
+        bldgNumber: bldgNumber,
+        numberOfBeds: numberOfBeds,
+        numberOfBaths: numberOfBaths,
+        totalSquareFootage: totalSquareFootage,
+        propertyId: propertyId,
       }),
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -55,7 +54,7 @@ const UnitCreate = (props: Props) => {
       });
   };
   return (
-    <StyledModal as={motion.div} whileHover={{ scale: 1.1 }} drag>
+    <StyledModal>
       <form onSubmit={fetchUnitData}>
         <h1>Create Unit</h1>
         <div>

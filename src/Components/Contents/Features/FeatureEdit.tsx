@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 type Feature = {
   id: number;
@@ -50,7 +50,7 @@ const FeatureEdit = (props: Props) => {
   };
 
   return (
-    <StyledModal as={motion.div} drag>
+    <StyledModal>
       <form onSubmit={featureUpdate}>
         <h1>Update Edit</h1>
         <label htmlFor='feature'>Edit Feature:</label>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 
 type Props = {
   token: string | null;
@@ -28,7 +28,6 @@ const PropertyCreate = (props: Props) => {
         state: state,
         zipcode: zipcode,
         numberOfUnits: numberOfUnits,
-        companyId: 1,
       }),
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -51,7 +50,7 @@ const PropertyCreate = (props: Props) => {
   };
 
   return (
-    <StyledModal as={motion.div} drag>
+    <StyledModal>
       <form onSubmit={fetchPropertyData}>
         <h1>Create New Property</h1>
         <div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import APIURL from '../../../Utilities/Environments';
 import { StyledModal } from '../../Styles/Modal';
-import { motion } from 'framer-motion';
+// import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 
 type Props = {
@@ -23,13 +23,11 @@ const FeatureCreate = (props: Props) => {
     fetch(`${APIURL}/feature/create`, {
       method: 'POST',
       body: JSON.stringify({
-        unitId,
-        feature: {
-          feature,
-          roomType,
-          value,
-          notes,
-        },
+        feature: feature,
+        roomType: roomType,
+        value: value,
+        notes: notes,
+        unitId: unitId,
       }),
       headers: new Headers({
         'Content-Type': 'application/json',
@@ -49,7 +47,7 @@ const FeatureCreate = (props: Props) => {
       });
   };
   return (
-    <StyledModal as={motion.div} drag>
+    <StyledModal>
       <form onSubmit={fetchFeatureData}>
         <h1>Create New Feature</h1>
         <div>

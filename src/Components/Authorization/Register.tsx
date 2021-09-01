@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import APIURL from '../../Utilities/Environments';
 import { RegisterDiv } from '../Styles/Index';
+// import { useParams } from 'react-router-dom';
 
 type Props = {
-  token: string;
+  token: string | null;
   fetchUsers: Function;
+  companyId?: number;
 };
 
 const Register = (props: Props) => {
@@ -19,14 +21,11 @@ const Register = (props: Props) => {
     fetch(`${APIURL}/user/register`, {
       method: 'POST',
       body: JSON.stringify({
-        user: {
-          email: email,
-          password: password,
-          firstName: firstName,
-          lastName: lastName,
-          role: role,
-          companyId: 1,
-        },
+        email: email,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        role: role,
       }),
       headers: new Headers({
         'Content-Type': 'application/json',

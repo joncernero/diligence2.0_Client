@@ -14,6 +14,7 @@ import { GlobalStyle } from './Components/Styles/Global';
 import Login from './Components/Authorization/Login';
 import Navbar from './Components/Navigation/Navbar';
 import Home from './Components/Pages/Home';
+import Admin from './Components/Authorization/Admin';
 
 type Token = {
   sessionToken: string | null;
@@ -44,9 +45,9 @@ const App = () => {
     if (pageToShow === 'dashboard') {
       component = <Dashboard token={sessionToken} />;
     }
-    // if (pageToShow === 'admin') {
-    //   component = <Admin token={sessionToken} />;
-    // }
+    if (pageToShow === 'admin') {
+      component = <Admin token={sessionToken} />;
+    }
     if (pageToShow === 'property') {
       component = <PropertyIndex token={sessionToken} />;
     }
